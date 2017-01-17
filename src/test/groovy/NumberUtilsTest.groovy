@@ -95,12 +95,23 @@ class NumberUtilsTest extends Specification {
 		NumberUtils.toEnglish(number) == english
 
 		where:
-		number                 | english
-		1000000                | "one million"
-		1000000000             | "one billion"
-		1000000000000          | "one trillion"
-		1000000000000000       | "one quadrillion"
-		1000000000000000000    | "one quintillion"
-		1000000000000000000000 | "one sextillion"
+		number                   | english
+		1000000                  | "one million"
+		1000000000               | "one billion"
+		1000000000000            | "one trillion"
+		1000000000000000         | "one quadrillion"
+		1000000000000000000      | "one quintillion"
+		1000000000000000000000   | "one sextillion"
+		999999999999999999999999 | "nine hundred ninety-nine sextillion nine hundred ninety-nine quintillion nine hundred ninety-nine quadrillion nine hundred ninety-nine trillion nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine"
+	}
+
+	def "negative numbers to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number | english
+		-1     | "negative one"
+		-99999 | "negative ninety-nine thousand nine hundred ninety-nine"
 	}
 }

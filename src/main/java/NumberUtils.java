@@ -11,11 +11,17 @@ class NumberUtils {
 			return "zero";
 		}
 
+		StringBuilder builder = new StringBuilder();
+		if (number.compareTo(BigInteger.ZERO) < 0) {
+			builder.append("negative ");
+		}
+
+		number = number.abs();
+
 		String reversedNumber = StringUtils.reverse(number.toString());
 		List<String> reversedComponents = StringUtils.splitBySize(reversedNumber);
 		List<String> numberComponents = reversedComponents.stream().map(StringUtils::reverse).collect(Collectors.toList());
 
-		StringBuilder builder = new StringBuilder();
 		for (int i = numberComponents.size() - 1; i >= 0; i--) {
 			BigInteger componentNumber = new BigInteger(numberComponents.get(i));
 			String componentResult = hundredsToEnglish(componentNumber);

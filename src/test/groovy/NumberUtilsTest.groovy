@@ -64,6 +64,7 @@ class NumberUtilsTest extends Specification {
 		number | english
 		001    | "one"
 		100    | "one hundred"
+		113    | "one hundred thirteen"
 		200    | "two hundred"
 		300    | "three hundred"
 		400    | "four hundred"

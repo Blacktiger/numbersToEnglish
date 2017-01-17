@@ -148,7 +148,7 @@ class NumberUtils {
 		}
 
 		if (isTen(tens)) {
-			builder.append(teensToEnglish(number));
+			builder.append(teensToEnglish(number.subtract(ONE_HUNDRED.multiply(hundreds))));
 		} else if (isTens(tens)) {
 			builder.append(tensToEnglish(tens, ones));
 		} else {

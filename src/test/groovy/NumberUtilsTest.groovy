@@ -4,7 +4,7 @@
 import spock.lang.Specification
 
 class NumberUtilsTest extends Specification {
-	def "basic numbers to english"() {
+	def "ones to english"() {
 		expect:
 		NumberUtils.toEnglish(number) == english
 
@@ -20,6 +20,14 @@ class NumberUtilsTest extends Specification {
 		7      | "seven"
 		8      | "eight"
 		9      | "nine"
+	}
+
+	def "teens to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number | english
 		10     | "ten"
 		11     | "eleven"
 		12     | "twelve"
@@ -46,16 +54,27 @@ class NumberUtilsTest extends Specification {
 		70     | "seventy"
 		80     | "eighty"
 		90     | "ninety"
+		21     | "twenty-one"
+		43     | "forty-three"
+		99     | "ninety-nine"
 	}
 
-	def "tens combined with basic to english"() {
+	def "hundreds to english"() {
 		expect:
 		NumberUtils.toEnglish(number) == english
 
 		where:
 		number | english
-		21     | "twenty-one"
-		29     | "twenty-nine"
-		99     | "ninety-nine"
+		100    | "one hundred"
+		200    | "two hundred"
+		300    | "three hundred"
+		400    | "four hundred"
+		500    | "five hundred"
+		600    | "six hundred"
+		700    | "seven hundred"
+		800    | "eight hundred"
+		900    | "nine hundred"
+		101    | "one hundred one"
+		999    | "nine hundred ninety-nine"
 	}
 }

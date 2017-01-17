@@ -6,8 +6,8 @@ public class StringUtils {
 		return new StringBuilder(str).reverse().toString();
 	}
 
-	public static List<String> splitBySize(String str) {
-		return Arrays.asList(str.split("(?<=\\G.{3})"));
+	public static List<String> splitBySize(String str, int size) {
+		return Arrays.asList(str.split("(?<=\\G.{" + size + "})"));
 	}
 
 	public static void trimTrailingSpace(StringBuilder builder) {

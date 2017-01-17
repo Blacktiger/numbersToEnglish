@@ -19,7 +19,7 @@ class NumberUtils {
 		number = number.abs();
 
 		String reversedNumber = StringUtils.reverse(number.toString());
-		List<String> reversedComponents = StringUtils.splitBySize(reversedNumber);
+		List<String> reversedComponents = StringUtils.splitBySize(reversedNumber, 3);
 		List<String> numberComponents = reversedComponents.stream().map(StringUtils::reverse).collect(Collectors.toList());
 
 		for (int i = numberComponents.size() - 1; i >= 0; i--) {

@@ -1,0 +1,1 @@
+To run this program, use `./gradlew run -Dargs=number` where number is any number.

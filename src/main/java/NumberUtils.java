@@ -1,39 +1,47 @@
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class NumberUtils {
 	private static final BigInteger ONE_HUNDRED = new BigInteger("100");
 
 	public static String toEnglish(BigInteger number) {
-		StringBuilder result = new StringBuilder("");
-
-		BigInteger hundreds = number.divide(ONE_HUNDRED);
-		BigInteger tens = number.mod(ONE_HUNDRED).divide(BigInteger.TEN);
-		BigInteger ones = number.mod(ONE_HUNDRED).mod(BigInteger.TEN);
-
 		if (BigInteger.ZERO.equals(number)) {
 			return "zero";
 		}
 
-		if (hundreds.compareTo(BigInteger.ZERO) > 0) {
-			result.append(onesToEnglish(hundreds)).append(" hundred ");
+		String reversedNumber = StringUtils.reverse(number.toString());
+		List<String> reversedComponents = StringUtils.splitBySize(reversedNumber);
+		List<String> numberComponents = reversedComponents.stream().map(StringUtils::reverse).collect(Collectors.toList());
+
+		StringBuilder builder = new StringBuilder();
+		for (int i = numberComponents.size() - 1; i >= 0; i--) {
+			BigInteger componentNumber = new BigInteger(numberComponents.get(i));
+			String componentResult = hundredsToEnglish(componentNumber);
+			builder.append(componentResult);
+			if (!BigInteger.ZERO.equals(componentNumber)) {
+				if (i == 1) {
+					builder.append(" thousand ");
+				} else if (i == 2) {
+					builder.append(" million ");
+				} else if (i == 3) {
+					builder.append(" billion ");
+				} else if (i == 4) {
+					builder.append(" trillion ");
+				} else if (i == 5) {
+					builder.append(" quadrillion ");
+				} else if (i == 6) {
+					builder.append(" quintillion ");
+				} else if (i == 7) {
+					builder.append(" sextillion ");
+				}
+			}
 		}
 
-		if (isTen(tens)) {
-			result.append(teensToEnglish(number));
-		} else if (isTens(tens)) {
-			result.append(tensToEnglish(tens, ones));
-		} else {
-			result.append(onesToEnglish(ones));
-		}
+		StringUtils.trimTrailingSpace(builder);
 
-		// Remove a trailing space if it exists.
-		if (result.charAt(result.length() - 1) == ' ') {
-			result.setLength(result.length() - 1);
-		}
-
-		return result.toString();
+		return builder.toString();
 	}
 
 	private static boolean isTen(BigInteger tens) {
@@ -117,5 +125,32 @@ class NumberUtils {
 		}
 
 		return result.toString();
+	}
+
+	private static String hundredsToEnglish(BigInteger number) {
+		if (BigInteger.ZERO.equals(number)) {
+			return "";
+		}
+
+		BigInteger hundreds = number.divide(ONE_HUNDRED);
+		BigInteger tens = number.mod(ONE_HUNDRED).divide(BigInteger.TEN);
+		BigInteger ones = number.mod(ONE_HUNDRED).mod(BigInteger.TEN);
+
+		StringBuilder builder = new StringBuilder("");
+		if (hundreds.compareTo(BigInteger.ZERO) > 0) {
+			builder.append(onesToEnglish(hundreds)).append(" hundred ");
+		}
+
+		if (isTen(tens)) {
+			builder.append(teensToEnglish(number));
+		} else if (isTens(tens)) {
+			builder.append(tensToEnglish(tens, ones));
+		} else {
+			builder.append(onesToEnglish(ones));
+		}
+
+		StringUtils.trimTrailingSpace(builder);
+
+		return builder.toString();
 	}
 }

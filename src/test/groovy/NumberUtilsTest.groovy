@@ -65,6 +65,7 @@ class NumberUtilsTest extends Specification {
 
 		where:
 		number | english
+		001    | "one"
 		100    | "one hundred"
 		200    | "two hundred"
 		300    | "three hundred"
@@ -76,5 +77,30 @@ class NumberUtilsTest extends Specification {
 		900    | "nine hundred"
 		101    | "one hundred one"
 		999    | "nine hundred ninety-nine"
+	}
+
+	def "thousands to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number | english
+		1000   | "one thousand"
+		9000   | "nine thousand"
+		9999   | "nine thousand nine hundred ninety-nine"
+	}
+
+	def "large numbers to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number                 | english
+		1000000                | "one million"
+		1000000000             | "one billion"
+		1000000000000          | "one trillion"
+		1000000000000000       | "one quadrillion"
+		1000000000000000000    | "one quintillion"
+		1000000000000000000000 | "one sextillion"
 	}
 }

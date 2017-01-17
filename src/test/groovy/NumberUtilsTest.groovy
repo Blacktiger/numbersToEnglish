@@ -31,4 +31,31 @@ class NumberUtilsTest extends Specification {
 		18     | "eighteen"
 		19     | "nineteen"
 	}
+
+	def "tens to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number | english
+		20     | "twenty"
+		30     | "thirty"
+		40     | "forty"
+		50     | "fifty"
+		60     | "sixty"
+		70     | "seventy"
+		80     | "eighty"
+		90     | "ninety"
+	}
+
+	def "tens combined with basic to english"() {
+		expect:
+		NumberUtils.toEnglish(number) == english
+
+		where:
+		number | english
+		21     | "twenty-one"
+		29     | "twenty-nine"
+		99     | "ninety-nine"
+	}
 }

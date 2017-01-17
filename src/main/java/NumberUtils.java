@@ -1,7 +1,40 @@
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 class NumberUtils {
 	public static String toEnglish(BigInteger number) {
+		String numberStr = number.toString();
+		StringBuilder result = new StringBuilder("");
+		
+		if (new BigInteger("20").compareTo(number) > 0) {
+			return basicNumbersToEnglish(number);
+		} else if (numberStr.length() == 2) {
+			if (numberStr.startsWith("2")) {
+				result.append("twenty");
+			} else if (numberStr.startsWith("3")) {
+				result.append("thirty");
+			} else if (numberStr.startsWith("4")) {
+				result.append("forty");
+			} else if (numberStr.startsWith("5")) {
+				result.append("fifty");
+			} else if (numberStr.startsWith("6")) {
+				result.append("sixty");
+			} else if (numberStr.startsWith("7")) {
+				result.append("seventy");
+			} else if (numberStr.startsWith("8")) {
+				result.append("eighty");
+			} else if (numberStr.startsWith("9")) {
+				result.append("ninety");
+			}
+		}
+		if (!numberStr.endsWith("0")) {
+			result.append("-").append(basicNumbersToEnglish(number.subtract(new BigInteger(numberStr.charAt(0) + "0"))));
+		}
+		return result.toString();
+	}
+
+	private static String basicNumbersToEnglish(BigInteger number) {
 		if (BigInteger.ZERO.equals(number)) {
 			return "zero";
 		} else if (BigInteger.ONE.equals(number)) {
@@ -40,10 +73,8 @@ class NumberUtils {
 			return "seventeen";
 		} else if (new BigInteger("18").equals(number)) {
 			return "eighteen";
-		} else if (new BigInteger("19").equals(number)) {
-			return "nineteen";
 		} else {
-			return "unknown number";
+			return "nineteen";
 		}
 	}
 }

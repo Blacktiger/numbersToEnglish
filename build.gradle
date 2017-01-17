@@ -38,5 +38,5 @@ dependencies {
 mainClassName = 'App'
 
 run {
-    args System.getProperty("args")?.split() ?: 0
+    args System.getProperty("args")?.split() ?: []
 }
